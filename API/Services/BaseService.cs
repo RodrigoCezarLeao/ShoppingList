@@ -1,6 +1,6 @@
 using System.Data.SqlClient;
 
-namespace backend {
+namespace API.Services {
     public class BaseService {
         private static string connectionString()
         {
@@ -9,7 +9,7 @@ namespace backend {
 
         public static SqlConnection getConnection(){
             var sqlConn = new SqlConnection(connectionString());
-            sqlConn.Open();
+            sqlConn.Open();            
 
             return sqlConn;
         }
