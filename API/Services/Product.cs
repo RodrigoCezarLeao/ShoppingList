@@ -16,12 +16,33 @@ namespace API.Services {
                     result.Add(new Product() {
                         Id = Convert.ToInt32(queryResult["id"]),
                         Name = queryResult["name"].ToString(),
-                        UnitOfMeasured = queryResult["unit_of_measure"].ToString(),
+                        UnitOfMeasure = queryResult["unit_of_measure"].ToString(),
                     });
                 }
             }
 
             return result;
+        }
+
+
+        public static bool insertProduct(Product product)
+        {
+            try {
+                using(var conn = BaseService.getConnection())
+                {
+                    var sql = new SqlCommand("INSERT INTO product (name, unit_of_measure) values (@name, @uom)", conn);
+                    sql.Parameters.AddWithValue("@name", product.Name);
+                    sql.Parameters.AddWithValue("@uom", product.UnitOfMeasure);
+
+                    var queryResult = sql.ExecuteNonQuery();
+
+                    return true;
+                }
+            }catch(Exception e)
+            {
+                Console.WriteLine(e);
+                return false;
+            }            
         }
     }
 }
