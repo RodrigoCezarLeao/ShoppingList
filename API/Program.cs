@@ -19,5 +19,13 @@ app.MapPost("/products", async (context) =>
     var res = ProductService.insertProduct(aux);
     context.Response.WriteAsync($"Adicionado com sucesso? {res}");
 });
+app.MapDelete("/products", async (context) =>
+{    
+    var reqParams = context.Request.QueryString.Value;
+    var parsedReqParams = System.Web.HttpUtility.ParseQueryString(reqParams);
+    var id = Convert.ToInt32(parsedReqParams["id"]);
+    var res = ProductService.deleteProduct(id);
+    context.Response.WriteAsync($"Item excluído com sucesso? {res}");
+});
 
 app.Run();
