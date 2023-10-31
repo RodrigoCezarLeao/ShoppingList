@@ -1,5 +1,8 @@
+
 using API.Models;
 using API.Services;
+using Newtonsoft.Json.Linq;
+
 
 var builder = WebApplication.CreateBuilder(args);
 var app = builder.Build();
@@ -11,13 +14,20 @@ app.MapGet("/products", async (context) =>
     var lst = ProductService.getAllProducts();
     context.Response.Headers.Add("Content-Type", "text/html; charset=utf-8");
     context.Response.WriteAsync($"{string.Join("<br/>", lst)}");
-
 });
 app.MapPost("/products", async (context) =>
 {
-    var aux = new Product() {Name="Desodorante Rexona Pés", UnitOfMeasure="153 ml"};
-    var res = ProductService.insertProduct(aux);
-    context.Response.WriteAsync($"Adicionado com sucesso? {res}");
+    using(StreamReader streamReader = new StreamReader(context.Request.Body))
+    {
+        var aux = await streamReader.ReadToEndAsync();
+        var converted = JObject.Parse(aux);
+        var product = new Product(){
+            Name = (string) converted["name"],
+            UnitOfMeasure = (string) converted["unit_of_measure"]
+        };
+        var res = ProductService.insertProduct(product);
+        context.Response.WriteAsync($"{product.Name} adicionado com sucesso? {res}");
+    }    
 });
 app.MapDelete("/products", async (context) =>
 {    
