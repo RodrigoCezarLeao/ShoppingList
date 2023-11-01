@@ -34,9 +34,8 @@ namespace API.Services {
                     sql.Parameters.AddWithValue("@name", product.Name);
                     sql.Parameters.AddWithValue("@uom", product.UnitOfMeasure);
                     var queryResult = sql.ExecuteNonQuery();
-
-                    return true;
                 }
+                return true;
             }catch(Exception e)
             {
                 Console.WriteLine(e);
@@ -52,9 +51,27 @@ namespace API.Services {
                     var sql = new SqlCommand("DELETE FROM product WHERE Id = @id", conn);
                     sql.Parameters.AddWithValue("@id", id);
                     var queryResult = sql.ExecuteNonQuery();
-
-                    return true;
                 }
+                return true;
+            }catch(Exception e)
+            {
+                Console.WriteLine(e);
+                return false;
+            }
+        }
+
+        public static bool updateProduct(Product product)
+        {
+            try{
+                using(var conn = BaseService.getConnection())
+                {
+                    var sql = new SqlCommand("UPDATE product SET name=@name, unit_of_measure = @uom WHERE Id = @id", conn);
+                    sql.Parameters.AddWithValue("@name", product.Name);
+                    sql.Parameters.AddWithValue("@uom", product.UnitOfMeasure);
+                    sql.Parameters.AddWithValue("@id", product.Id);
+                    var queryResult = sql.ExecuteNonQuery();
+                }
+                return true;
             }catch(Exception e)
             {
                 Console.WriteLine(e);

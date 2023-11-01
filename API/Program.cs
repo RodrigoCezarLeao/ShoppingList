@@ -37,13 +37,23 @@ app.MapDelete("/products", async (context) =>
     var res = ProductService.deleteProduct(id);
     context.Response.WriteAsync($"Item excluído com sucesso? {res}");
 });
-app.MapDelete("/products", async (context) =>
-{    
-    var reqParams = context.Request.QueryString.Value;
-    var parsedReqParams = System.Web.HttpUtility.ParseQueryString(reqParams);
-    var id = Convert.ToInt32(parsedReqParams["id"]);
-    var res = ProductService.deleteProduct(id);
-    context.Response.WriteAsync($"Item excluído com sucesso? {res}");
+app.MapPut("/producs", async (context) =>
+{   
+    using(StreamReader streamReader = new StreamReader(context.Request.Body))
+    {
+        var contentBody = await streamReader.ReadToEndAsync();
+        var obj = JObject.Parse(contentBody);
+        var product = new Product() {
+            Id = Convert.ToInt32(obj["id"]),
+            Name = obj["name"].ToString(),
+            UnitOfMeasure = obj["unit_of_measure"].ToString()
+        };
+        var res = ProductService.updateProduct(product);
+        context.Response.WriteAsync($"{product.Name } atualizado com sucesso? {res}");
+    }
+    
+    
+    
 });
 
 app.Run();
