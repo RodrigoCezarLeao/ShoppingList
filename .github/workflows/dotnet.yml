@@ -20,14 +20,14 @@ jobs:
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 7.0.x
-    - name: List Dir
-      run: dir
     - name: Go to proper directory
-      run: cd API
+      run: cd ../API
     - name: Display dotnet version
       run: dotnet --version    
-    - name: Restore dependencies
-      run: dotnet restore
+    - name: Install dependency 1
+      run: dotnet add package System.Data.SqlClient --version 4.8.2
+    - name: Install dependency 2
+      run: dotnet add package Newtonsoft.Json --version 13.0.3
     - name: Build
       run: dotnet build --no-restore
     - name: Test
