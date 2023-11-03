@@ -21,7 +21,7 @@ jobs:
       with:
         dotnet-version: 7.0.x
     - name: Go to proper directory
-      run: cd ../API
+      run: cd API
     - name: Display dotnet version
       run: dotnet --version    
     - name: Install dependency 1
