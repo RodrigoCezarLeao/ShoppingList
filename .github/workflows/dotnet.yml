@@ -25,9 +25,9 @@ jobs:
     - name: Display dotnet version
       run: dotnet --version    
     - name: Install dependency 1
-      run: dotnet add package System.Data.SqlClient --version 4.8.2
+      run: dotnet add ShoppingList package System.Data.SqlClient --version 4.8.2
     - name: Install dependency 2
-      run: dotnet add package Newtonsoft.Json --version 13.0.3
+      run: dotnet add ShoppingList package Newtonsoft.Json --version 13.0.3
     - name: Build
       run: dotnet build --no-restore
     - name: Test
