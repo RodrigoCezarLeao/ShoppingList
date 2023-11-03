@@ -13,6 +13,8 @@ Be aware of how much you must pay before go to the cashier.
 
 ## Development Learns
 
+
+
 ### Gitignore
 ```
 https://www.toptal.com/developers/gitignore/api/windows,linux,macos,visualstudio,visualstudiocode,dotnetcore
@@ -34,6 +36,9 @@ https://www.toptal.com/developers/gitignore/api/windows,linux,macos,visualstudio
 
     // Access data stored (must convert to some type)
     Console.WriteLine((string) obj["name"]);
+
+    // Parse object to string json
+    var jsonString = JsonConvert.SerializeObject(obj);
 ```
 
 
